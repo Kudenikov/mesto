@@ -1,0 +1,11 @@
+.cards__heart-pic {
+    width: 22px;
+    height: 19px;
+    object-fit: cover;
+    transition: opacity .5s ease-in;
+    cursor: pointer;
+}
+
+.cards__heart-pic:hover {
+    opacity: .5;
+}
