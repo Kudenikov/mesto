@@ -10,6 +10,7 @@
     font-weight: 400;
     transition: opacity .5s ease-in;
     cursor: pointer;
+    border: none;
 }
 
 .popup__button:hover {
