@@ -1,12 +1,6 @@
 .profile__title {
-    max-width: 350px;
+    max-width: 100%;
     display: flex;
     margin: 0;
     padding: 0;
-}
-
-@media screen and (max-width: 350px) {
-    .profile__title {
-        max-width: 250px;
-    }   
 }
