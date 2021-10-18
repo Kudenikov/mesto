@@ -69,8 +69,9 @@ function createCard(item) {
       event.target.closest('.cards__item').remove();
     });
     cardPicture.addEventListener('click', (event) => {
-      popupZoomPicture.querySelector('.popup__picture').src = item.link;
-      popupZoomPicture.querySelector('.popup__picture').alt = item.name;
+      const popupPicture = popupZoomPicture.querySelector('.popup__picture');
+      popupPicture.src = item.link;
+      popupPicture.alt = item.name;
       popupZoomPicture.querySelector('.popup__caption').textContent = item.name;
       openPopup(popupZoomPicture);
     });
