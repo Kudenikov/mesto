@@ -60,8 +60,8 @@ function createCard(item) {
     const removeButton = card.querySelector('.cards__trash');
     const cardPicture = card.querySelector('.cards__image');
     card.querySelector('.cards__place').innerText = item.name;
-    card.querySelector('.cards__image').src = item.link;
-    card.querySelector('.cards__image').alt = item.name;
+    cardPicture.src = item.link;
+    cardPicture.alt = item.name;
     likeButton.addEventListener('click', (event) => {
       event.target.classList.toggle('cards__heart-pic_like');
     });
@@ -72,23 +72,19 @@ function createCard(item) {
       popupZoomPicture.querySelector('.popup__picture').src = item.link;
       popupZoomPicture.querySelector('.popup__picture').alt = item.name;
       popupZoomPicture.querySelector('.popup__caption').textContent = item.name;
-      openPopupZoomPicture()
+      openPopup(popupZoomPicture);
     });
     return card;
 }
 
+function openPopup(popup) {
+  popup.classList.add('popup_opened');
+}
+
 function openPopupProfileEdit() {
-    popupProfileEdit.classList.add('popup_opened');
-    nameField.value = profileName.textContent;
-    professionField.value = profileProfession.textContent;
-}
-
-function openPopupAddCard() {
-  popupAddCard.classList.add('popup_opened');
-}
-
-function openPopupZoomPicture() {
-  popupZoomPicture.classList.add('popup_opened');
+  openPopup(popupProfileEdit)
+  nameField.value = profileName.textContent;
+  professionField.value = profileProfession.textContent;
 }
 
 function closePopup(item) {
@@ -114,7 +110,7 @@ function submitAddCardForm(event) {
   closePopup(popupAddCard);
 }
 
-addButton.addEventListener('click', openPopupAddCard);
+addButton.addEventListener('click', (event) => {openPopup(popupAddCard)});
 editButton.addEventListener('click', openPopupProfileEdit);
 popupEditCloseButton.addEventListener('click', (event) => {closePopup(popupProfileEdit)});
 popupAddCloseButton.addEventListener('click', (event) => {closePopup(popupAddCard)});
