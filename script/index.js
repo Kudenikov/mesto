@@ -83,7 +83,7 @@ function openPopup(popup) {
 }
 
 function openPopupProfileEdit() {
-  openPopup(popupProfileEdit)
+  openPopup(popupProfileEdit);
   nameField.value = profileName.textContent;
   professionField.value = profileProfession.textContent;
 }
@@ -110,6 +110,20 @@ function submitAddCardForm(event) {
   event.target.reset();
   closePopup(popupAddCard);
 }
+
+const popupArray = Array.from(document.querySelectorAll('.popup'))
+popupArray.forEach((item) => {
+  item.addEventListener('click', (event) => {
+    if (event.target.classList.contains('popup')) {
+    closePopup(item);
+    }
+  })
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+    closePopup(item)
+    }
+  })
+})
 
 addButton.addEventListener('click', (event) => {openPopup(popupAddCard)});
 editButton.addEventListener('click', openPopupProfileEdit);
