@@ -80,6 +80,15 @@ function createCard(item) {
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  //функция закрытия попапа по нажатию клавиши Esc и снятие слушателя после закрытия
+  const escapeHandler = (event) => {
+    if (event.key === 'Escape') {
+      closePopup(popup);
+      document.removeEventListener('keydown', escapeHandler);
+      }
+    }
+  //включения слушателя клавиши Esc для закрытия попапа
+  document.addEventListener('keydown', escapeHandler);
 }
 
 function openPopupProfileEdit() {
@@ -88,15 +97,23 @@ function openPopupProfileEdit() {
   professionField.value = profileProfession.textContent;
 }
 
-function closePopup(item) {
-    item.classList.remove('popup_opened');
+//функция закрытия попапа
+function closePopup(popup) {
+  popup.classList.remove('popup_opened');
+  //проверка содержится ли внитри попапа форма
+  if (popup.querySelector('.popup__form')) {
+    const formElement = popup.querySelector('.popup__form');
+    const inputElement = formElement.querySelector('.popup__input');
+    hideInputError(formElement, inputElement, validationConfig);
+    formElement.reset();
+  }
 }
 
 function submitProfileEditForm(event) {
-    event.preventDefault();
-    profileName.textContent = nameField.value;
-    profileProfession.textContent = professionField.value;
-    closePopup(popupProfileEdit);
+  event.preventDefault();
+  profileName.textContent = nameField.value;
+  profileProfession.textContent = professionField.value;
+  closePopup(popupProfileEdit);
 }
 
 function submitAddCardForm(event) {
@@ -118,11 +135,7 @@ popupArray.forEach((item) => {
     closePopup(item);
     }
   })
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-    closePopup(item)
-    }
-  })
+
 })
 
 addButton.addEventListener('click', (event) => {openPopup(popupAddCard)});
