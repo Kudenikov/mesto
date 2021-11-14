@@ -109,13 +109,11 @@ popupArray.forEach((item) => {
 })
 
 addButton.addEventListener('click', () => {
-  formAddCardValidation.enableValidation();
   formAddCardValidation.resetValidation();
   openPopup(popupAddCard);
 });
 
 editButton.addEventListener('click', () => {
-  formProfileEditValidation.enableValidation();
   formProfileEditValidation.resetValidation();
   openPopupProfileEdit();
 });
@@ -134,3 +132,5 @@ const validationConfig = {
 
 const formProfileEditValidation = new FormValidator(validationConfig, formProfileEdit);
 const formAddCardValidation = new FormValidator(validationConfig, formAddCard);
+formProfileEditValidation.enableValidation();
+formAddCardValidation.enableValidation();
