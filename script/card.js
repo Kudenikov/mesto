@@ -1,4 +1,7 @@
-import {popupZoomPicture, openPopup} from './index.js'
+import {openPopup} from './index.js'
+const popupZoomPicture = document.querySelector('.popup_zoom-picture');
+const popupPicture = popupZoomPicture.querySelector('.popup__picture');
+const popupPictureCaption = popupZoomPicture.querySelector('.popup__caption');
 
 class Card {
   constructor(data, cardSelector) {
@@ -39,10 +42,9 @@ class Card {
   }
 
   _handleZoomPicture() {
-    const popupPicture = popupZoomPicture.querySelector('.popup__picture');
     popupPicture.src = this._link;
     popupPicture.alt = this._name;
-    popupZoomPicture.querySelector('.popup__caption').textContent = this._name;
+    popupPictureCaption.textContent = this._name;
     openPopup(popupZoomPicture);
   }
 
@@ -52,4 +54,5 @@ class Card {
     this._cardPicture.addEventListener('click', () => this._handleZoomPicture());
   }
 }
+
 export default Card;
