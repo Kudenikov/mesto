@@ -1,9 +1,8 @@
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+
 const popupProfileEdit = document.querySelector('.popup_profile-edit');
 const popupAddCard = document.querySelector('.popup_add-card');
-export const popupZoomPicture = document.querySelector('.popup_zoom-picture');
-const popupEditCloseButton = popupProfileEdit.querySelector('.popup__close');
-const popupAddCloseButton = popupAddCard.querySelector('.popup__close');
-const popupZoomCloseButton = popupZoomPicture.querySelector('.popup__close');
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button');
 const formProfileEdit = popupProfileEdit.querySelector('.popup__form_function_profile-edit');
@@ -44,8 +43,6 @@ const initialCards = [
     }
   ];
 
-import Card from './card.js';
-
 const cards = document.querySelector('.cards');
 
 initialCards.forEach(prependCard);
@@ -56,17 +53,16 @@ function prependCard(item) {
   cards.prepend(cardElement);
 }
 
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened');
+    closePopup(openedPopup);
+  }
+}
+
 export function openPopup(popup) {
   popup.classList.add('popup_opened');
-  //функция закрытия попапа по нажатию клавиши Esc и снятие слушателя после закрытия
-  const escapeHandler = (event) => {
-    if (event.key === 'Escape') {
-      closePopup(popup);
-      document.removeEventListener('keydown', escapeHandler);
-      }
-    }
-  //включение слушателя клавиши Esc для закрытия попапа
-  document.addEventListener('keydown', escapeHandler);
+  document.addEventListener('keydown', closeByEscape);
 }
 
 function openPopupProfileEdit() {
@@ -78,20 +74,7 @@ function openPopupProfileEdit() {
 //функция закрытия попапа
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
-  //проверка содержится ли внитри попапа форма
-  if (popup.querySelector('.popup__form')) {
-    const formElement = popup.querySelector('.popup__form');
-    const inputElements = formElement.querySelectorAll('.popup__input');
-    inputElements.forEach(item => hideError(formElement, item, validationConfig))
-    formElement.reset();
-  }
-}
-
-function hideError(form, inputElement, config) {
-  const formError = form.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(config.inputErrorUnderlineClass);
-  formError.classList.remove(config.inputErrorTextClass);
-  formError.textContent = '';
+  document.removeEventListener('keydown', closeByEscape);
 }
 
 function submitProfileEditForm(event) {
@@ -116,17 +99,27 @@ function submitAddCardForm(event) {
 const popupArray = Array.from(document.querySelectorAll('.popup'))
 popupArray.forEach((item) => {
   item.addEventListener('click', (event) => {
-    if (event.target.classList.contains('popup')) {
+    if (event.target.classList.contains('popup_opened')) {
     closePopup(item);
+    }
+    if (event.target.classList.contains('popup__close')) {
+      closePopup(item);
     }
   })
 })
 
-addButton.addEventListener('click', () => openPopup(popupAddCard));
-editButton.addEventListener('click', openPopupProfileEdit);
-popupEditCloseButton.addEventListener('click', () => closePopup(popupProfileEdit));
-popupAddCloseButton.addEventListener('click', () => closePopup(popupAddCard));
-popupZoomCloseButton.addEventListener('click', () => closePopup(popupZoomPicture));
+addButton.addEventListener('click', () => {
+  formAddCardValidation.enableValidation();
+  formAddCardValidation.resetValidation();
+  openPopup(popupAddCard);
+});
+
+editButton.addEventListener('click', () => {
+  formProfileEditValidation.enableValidation();
+  formProfileEditValidation.resetValidation();
+  openPopupProfileEdit();
+});
+
 formProfileEdit.addEventListener('submit', submitProfileEditForm);
 formAddCard.addEventListener('submit', submitAddCardForm);
 
@@ -139,10 +132,5 @@ const validationConfig = {
   submitButtonErrorClass: 'popup__button_inactive'
 }
 
-import FormValidator from './FormValidator.js';
-
-const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
-formList.forEach(item => {
-  const formValid = new FormValidator(validationConfig, item);
-  formValid.enableValidation()
-});
+const formProfileEditValidation = new FormValidator(validationConfig, formProfileEdit);
+const formAddCardValidation = new FormValidator(validationConfig, formAddCard);

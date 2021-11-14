@@ -8,25 +8,23 @@ class FormValidator {
     this._inputErrorTextClass = data.inputErrorTextClass;
     this._submitButtonSelector = data.submitButtonSelector;
     this._submitButtonErrorClass = data.submitButtonErrorClass;
-    this._formElement = formElement
+    this._formElement = formElement;
+    this._inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
+    this._button = this._formElement.querySelector(this._submitButtonSelector)
   }
 
   //Метод, который выполняет поиск всех форм, предотвращает появление стандартного события при отправке формы и запускает слушателя
   enableValidation() {
-    const formList = Array.from(document.querySelectorAll(this._formSelector));
-    formList.forEach((formElement) => {
-      formElement.addEventListener('submit', (evt) => {
-        evt.preventDefault();
-      });
-      this._setEventListeners();
+    this._formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
     });
+    this._setEventListeners();
   }
 
   //Метод, который слушает все инпуты, проверяет их валидность и меняет состояние кнопки
   _setEventListeners() {
-    const inputList = Array.from(this._formElement.querySelectorAll(this._inputSelector));
     this._toggleButtonState();
-    inputList.forEach((inputElement) => {
+    this._inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
         this._toggleButtonState();
@@ -36,10 +34,8 @@ class FormValidator {
 
   //Метод, который меняет состояние кнопки отправки формы
   _toggleButtonState() {
-    const button = this._formElement.querySelector(this._submitButtonSelector);
-
-    button.disabled = !this._formElement.checkValidity();
-    button.classList.toggle(this._submitButtonErrorClass, !this._formElement.checkValidity())
+    this._button.disabled = !this._formElement.checkValidity();
+    this._button.classList.toggle(this._submitButtonErrorClass, !this._formElement.checkValidity())
   }
 
   //Метод, который выводит сообщение об ошибке, если поле не валидно, и скрывает, если поле валидно
@@ -65,6 +61,16 @@ class FormValidator {
     inputElement.classList.remove(this._inputErrorUnderlineClass);
     formError.classList.remove(this._inputErrorTextClass);
     formError.textContent = '';
+  }
+  
+  //Обнуление ошибок, очистка полей формы
+  resetValidation() {
+    this._toggleButtonState();
+
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement);
+      inputElement.value = '';
+    });
   }
 }
 
