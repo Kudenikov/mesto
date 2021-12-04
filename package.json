@@ -1,0 +1,35 @@
+{
+  "name": "mesto",
+  "version": "1.0.0",
+  "description": "Сайт разработан в качестве проектной работы в рамках изучения основ языка ***Java Script***. Страница сверствана по макету, разработанному в Figma. В проекте применяется адаптивная верстка - страница одинаково хорошо смотрится на экране мобильного телефона, планшете и компьютере. В проекте присутствует форма, оформленная в виде всплывающего окна, которая изменяет содержимое полей - *Имя* и *Профессия* человека.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack build --mode production",
+    "dev": "webpack serve --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kudenikov/mesto.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kudenikov/mesto/issues"
+  },
+  "homepage": "https://github.com/Kudenikov/mesto#readme",
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
+    "autoprefixer": "^10.4.0",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
+    "cssnano": "^5.0.12",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.4.5",
+    "postcss": "^8.4.4",
+    "postcss-loader": "^6.2.1",
+    "webpack": "^5.64.4",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.6.0"
+  }
+}

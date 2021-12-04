@@ -11,30 +11,38 @@ export const nameField = popupProfEdit.querySelector('input[name="profile-name"]
 export const professionField = popupProfEdit.querySelector('input[name="profile-profession"]');
 export const placeNameField = popupAddCard.querySelector('input[name="place-name"]');
 export const imageLinkField = popupAddCard.querySelector('input[name="image-link"]');
+import rzhev from '../images/rzhev.jpg';
+import kazan from '../images/kazan.jpg';
+import mebius from '../images/mebius.jpg';
+import arctic from '../images/arctic lng-2.jpg';
+import lion from '../images/lion.jpg';
+import aquapark from '../images/aquapark.jpg';
+
+
 export const initialCards = [
     {
       name: 'Ржевский мемориал',
-      link: '../images/rzhev.jpg'
+      link: rzhev
     },
     {
       name: 'Казань Арена',
-      link: '../images/kazan.jpg'
+      link: kazan
     },
     {
       name: 'Арктик СПГ-2',
-      link: '../images/arctic lng-2.jpg'
+      link: arctic
     },
     {
       name: 'Опора ЛЭП',
-      link: '../images/lion.jpg'
+      link: lion
     },
     {
       name: 'Аквапарк Белгород',
-      link: '../images/aquapark.jpg'
+      link: aquapark
     },
     {
       name: 'Лента Мебиуса',
-      link: '../images/mebius.jpg'
+      link: mebius
     }
   ];
 export const validationConfig = {
