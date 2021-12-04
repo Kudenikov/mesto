@@ -1,13 +1,9 @@
-import {openPopup} from './index.js'
-const popupZoomPicture = document.querySelector('.popup_zoom-picture');
-const popupPicture = popupZoomPicture.querySelector('.popup__picture');
-const popupPictureCaption = popupZoomPicture.querySelector('.popup__caption');
-
 class Card {
-  constructor(data, cardSelector) {
+  constructor(data, cardSelector, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick
   }
 
   _getTemplate() {
@@ -41,17 +37,10 @@ class Card {
     event.target.closest('.cards__item').remove();
   }
 
-  _handleZoomPicture() {
-    popupPicture.src = this._link;
-    popupPicture.alt = this._name;
-    popupPictureCaption.textContent = this._name;
-    openPopup(popupZoomPicture);
-  }
-
   _setEventListeners() {
     this._likeButton.addEventListener('click', (event) => this._handleLikeButton(event));
     this._removeButton.addEventListener('click', (event) => this._handleRemoveButton(event));
-    this._cardPicture.addEventListener('click', () => this._handleZoomPicture());
+    this._cardPicture.addEventListener('click', () => this._handleCardClick(this._name, this._link));
   }
 }
 
