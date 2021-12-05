@@ -23,14 +23,19 @@ import UserInfo from '../components/UserInfo.js';
 const cardList = new Section({ 
   items: initialCards,
   renderer: (item) => {
-      const card = new Card(item, '.template', handleCardClick);
-      const cardElement = card.createCard();
-      cardList.addItem(cardElement)
+    cardList.addItem(createNewCard(item))
   }
  }, '.cards');
 
+function createNewCard(item) {
+  const card = new Card(item, '.template', handleCardClick);
+  const cardElement = card.createCard();
+  return cardElement;
+}
+
+const popupImg = new PopupWithImage('.popup_zoom-picture');
+
 function handleCardClick(name, link) {
-  const popupImg = new PopupWithImage('.popup_zoom-picture');
   popupImg.open(name, link);
   popupImg.setEventListeners();
 }
@@ -41,26 +46,20 @@ const user = new UserInfo({
 });
 
 const popupProfileEdit = new PopupWithForm({
-  formSubmit: (event) => {
-    event.preventDefault();
-    const profileData = popupProfileEdit._getInputValues();
-    user.setUserInfo(profileData);
+  handleFormSubmit: (data) => {
+    user.setUserInfo(data);
     popupProfileEdit.close()
   }
 
 }, '.popup_profile-edit');
 
 const popupAddCard = new PopupWithForm({
-  formSubmit: (event) => {
-    event.preventDefault();
-    const pictureData = popupAddCard._getInputValues();
+  handleFormSubmit: (data) => {
     const newCard = {
-      name: pictureData["place-name"],
-      link: pictureData["image-link"]
+      name: data["place-name"],
+      link: data["image-link"]
     }
-    const card = new Card(newCard, '.template');
-    const cardElement = card.createCard();
-    cardList.addItem(cardElement);
+    cardList.addItem(createNewCard(newCard));
     popupAddCard.close();
   }
 
