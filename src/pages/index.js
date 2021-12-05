@@ -20,7 +20,7 @@ import Card from '../components/Card.js';
 import UserInfo from '../components/UserInfo.js';
 
 //СОЗДАНИЕ ЭКЗЕМПЛЯРОВ КЛАССОВ
-const cardList = new Section({ 
+const cardList = new Section({
   items: initialCards,
   renderer: (item) => {
     cardList.addItem(createNewCard(item))
@@ -37,7 +37,6 @@ const popupImg = new PopupWithImage('.popup_zoom-picture');
 
 function handleCardClick(name, link) {
   popupImg.open(name, link);
-  popupImg.setEventListeners();
 }
 
 const user = new UserInfo({
@@ -74,6 +73,7 @@ cardList.renderItems();
 //ВКЛЮЧЕНИЕ СЛУШАТЕЛЕЙ СОБЫТИЙ
 popupProfileEdit.setEventListeners();
 popupAddCard.setEventListeners();
+popupImg.setEventListeners();
 
 addButton.addEventListener('click', () => {
   formAddCardValidation.resetValidation();
