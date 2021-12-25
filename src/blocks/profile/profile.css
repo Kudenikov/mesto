@@ -5,6 +5,7 @@
     display: flex;
     flex-wrap: wrap;
     padding: 0;
+    position: relative;
 }
 
 @media screen and (max-width: 767px) {

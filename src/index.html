@@ -12,7 +12,9 @@
     </header>
     <main>
         <section class="profile">
+            <div class="profile__avatar-container">    
                 <img class="profile__avatar" alt="Аватар пользователя" src="<%=require('./images/avatar.jpg')%>">
+            </div>
             <div class="profile__info">
                 <div class="profile__title">
                     <h1 class="profile__name">Артем&nbsp;Кудеников</h1>
@@ -59,12 +61,32 @@
             <p class="popup__caption">Архыз</p>
         </div>
     </div>
+    <div class="popup popup_delete-card">
+        <div class="popup__content popup__content_size_small">
+            <button type="button" class="popup__close"></button>
+            <h2 class="popup__title">Вы уверены?</h2>
+            <button class="popup__button" type="submit">Да</button>
+        </div>
+    </div>
+    <div class="popup popup_change-avatar">
+        <div class="popup__content popup__content_size_medium">
+            <button type="button" class="popup__close"></button>
+            <h2 class="popup__title">Обновить аватар</h2>
+            <form class="popup__form popup__form_function_change-avatar" name="change-avatar">
+                <input id="avatar-input" type="url" class="popup__input" name="avatar" required>
+                <button class="popup__button" type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
     <template class="template">
         <article class="cards__item">
             <img src="./images/karachaevsk.jpg" alt="Карачаевск" class="cards__image">
             <div class="cards__description">
                 <h2 class="cards__place">Карачаевск</h2>
-                <button type="button" class="cards__heart-pic"></button>
+                <div class="cards__like">
+                    <button type="button" class="cards__heart-pic"></button>
+                    <p class="cards__like-counter">0</p>
+                </div>
             </div>
             <button type="button" class="cards__trash"></button>
         </article>
