@@ -17,7 +17,6 @@ import {
 //ИМПОРТ КЛАССОВ
 import Section from '../components/Section.js';
 import PopupDeleteConfirm from '../components/PopupDeleteConfirm.js';
-import PopupChangeAvatar from '../components/PopupChangeAvatar.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
 import FormValidator from '../components/FormValidator.js';
@@ -32,21 +31,15 @@ const api = new Api({
 
 let myId;
 
-api.getUserInfo()
-  .then((data) => {
-    profileName.textContent = data.name;
-    profileProfession.textContent = data.about;
-    profileAvatar.src = data.avatar;
-    myId = data._id;
-  })
-  .catch(error => {
-    console.log('ОШИБКА:', error)
-  });
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then(([userData, cards]) => {
+    profileName.textContent = userData.name;
+    profileProfession.textContent = userData.about;
+    profileAvatar.src = userData.avatar;
+    myId = userData._id;
 
-api.getInitialCards()
-  .then((data) => {
     const cardList = new Section({
-      items: data,
+      items: cards,
       renderer: (item) => {
         cardList.addItem(createNewCard(item))
       }
@@ -89,8 +82,11 @@ function createNewCard(item) {
     handleRemoveButton: (card) => {
       popupDeleteCard.open();
       popupDeleteCard.setSubmitAction(() => {
-        api.deleteCard(item._id);
-        card.deleteCard();
+        api.deleteCard(item._id)
+        .then(card.deleteCard())
+        .catch(error => {
+          console.log('ОШИБКА:', error)
+        });
         popupDeleteCard.close(); 
     })},
 
@@ -135,15 +131,15 @@ function handleCardClick(name, link) {
 
 const user = new UserInfo({
   profileName: '.profile__name',
-  profileProfession: '.profile__profession'
+  profileProfession: '.profile__profession',
+  profileAvatar: '.profile__avatar'
 });
 
 const popupProfileEdit = new PopupWithForm({
   handleFormSubmit: (data) => {
     popupProfileEdit.renderLoading(true);
-    user.setUserInfo(data);
     api.updateUserInfo(data)
-    .then(data => console.log(data))
+    .then((data) => user.setUserInfo(data))
     .catch(error => {
       console.log('ОШИБКА:', error)
     })
@@ -170,23 +166,23 @@ editButton.addEventListener('click', () => {
 });
 
 profileAvatarContainer.addEventListener('click', () => {
-  popupChangeAva.open();
+  popupChangeAvatar.open();
 });
 
-const popupChangeAva = new PopupChangeAvatar('.popup_change-avatar', {
-  handleFormSubmit: () => {
-    popupChangeAva.renderLoading(true);
-    profileAvatar.src = popupChangeAva.getInputValue();
-    api.updateAvatar(popupChangeAva.getInputValue())
+const popupChangeAvatar = new PopupWithForm({
+  handleFormSubmit: (data) => {
+    popupChangeAvatar.renderLoading(true);
+    user.setAvatar(data);
+    api.updateAvatar(data['avatar'])
     .then(data => console.log(data))
     .catch(error => {
       console.log('ОШИБКА:', error)
     })
-    .finally(popupChangeAva.renderLoading(false));
-    popupChangeAva.close();
+    .finally(popupChangeAvatar.renderLoading(false));
+    popupChangeAvatar.close();
   }
-});
-popupChangeAva.setEventListeners();
+}, '.popup_change-avatar');
+popupChangeAvatar.setEventListeners();
 
 //ВКЛЮЧЕНИЕ ВАЛИДАЦИИ
 formProfileEditValidation.enableValidation();
