@@ -72,8 +72,9 @@
         <div class="popup__content popup__content_size_medium">
             <button type="button" class="popup__close"></button>
             <h2 class="popup__title">Обновить аватар</h2>
-            <form class="popup__form popup__form_function_change-avatar" name="change-avatar">
-                <input id="avatar-input" type="url" class="popup__input" name="avatar" required>
+            <form class="popup__form popup__form_function_change-avatar" name="change-avatar" novalidate>
+                <input id="avatar-input" type="url" class="popup__input" name="avatar" placeholder="Ссылка на новый аватар" required>
+                <span class="avatar-input-error popup__input-error"></span>
                 <button class="popup__button" type="submit">Сохранить</button>
             </form>
         </div>

@@ -9,6 +9,7 @@ export const editButton = document.querySelector('.profile__edit-button');
 export const addButton = document.querySelector('.profile__add-button');
 export const formProfileEdit = document.querySelector('.popup_profile-edit').querySelector('.popup__form_function_profile-edit');
 export const formAddCard = popupAddCard.querySelector('.popup__form_function_add-card');
+export const formChangeAvatar = document.querySelector('.popup__form_function_change-avatar');
 export const nameField = popupProfEdit.querySelector('input[name="profile-name"]');
 export const professionField = popupProfEdit.querySelector('input[name="profile-profession"]');
 export const placeNameField = popupAddCard.querySelector('input[name="place-name"]');

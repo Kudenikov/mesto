@@ -5,6 +5,7 @@ import {
   addButton,
   formProfileEdit,
   formAddCard,
+  formChangeAvatar,
   validationConfig,
   nameField,
   professionField,
@@ -139,7 +140,10 @@ const popupProfileEdit = new PopupWithForm({
   handleFormSubmit: (data) => {
     popupProfileEdit.renderLoading(true);
     api.updateUserInfo(data)
-    .then((data) => user.setUserInfo(data))
+    .then((data) => {
+      console.log(data);
+      user.setUserInfo(data)
+    })
     .catch(error => {
       console.log('ОШИБКА:', error)
     })
@@ -151,6 +155,7 @@ const popupProfileEdit = new PopupWithForm({
 
 const formProfileEditValidation = new FormValidator(validationConfig, formProfileEdit);
 const formAddCardValidation = new FormValidator(validationConfig, formAddCard);
+const formChangeAvatarValidation = new FormValidator(validationConfig, formChangeAvatar);
 
 
 //ВКЛЮЧЕНИЕ СЛУШАТЕЛЕЙ СОБЫТИЙ
@@ -187,3 +192,4 @@ popupChangeAvatar.setEventListeners();
 //ВКЛЮЧЕНИЕ ВАЛИДАЦИИ
 formProfileEditValidation.enableValidation();
 formAddCardValidation.enableValidation();
+formChangeAvatarValidation.enableValidation();

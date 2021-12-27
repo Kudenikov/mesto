@@ -18,8 +18,8 @@ export default class UserInfo {
     }
 
     setUserInfo(inputArray) {
-        this._profileName.textContent = inputArray['profile-name'];
-        this._profileProfession.textContent = inputArray['profile-profession']
+        this._profileName.textContent = inputArray['name'];
+        this._profileProfession.textContent = inputArray['about']
     }
 
     setAvatar(data) {
