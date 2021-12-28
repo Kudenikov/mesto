@@ -171,6 +171,7 @@ editButton.addEventListener('click', () => {
 });
 
 profileAvatarContainer.addEventListener('click', () => {
+  formChangeAvatarValidation.resetValidation();
   popupChangeAvatar.open();
 });
 
